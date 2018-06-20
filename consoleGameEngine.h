@@ -25,7 +25,7 @@ using namespace std;
 enum COLOUR
 {
     FG_BLACK        = 0x0000,
-    FG_DARK_BLUE    = 0x0001,   
+    FG_DARK_BLUE    = 0x0001,
     FG_DARK_GREEN   = 0x0002,
     FG_DARK_CYAN    = 0x0003,
     FG_DARK_RED     = 0x0004,
@@ -96,7 +96,7 @@ public:
         // by way of useful information, and so the resulting sequence is the reult of experiment
         // that seems to work in multiple cases.
         //
-        // The problem seems to be that the SetConsoleXXX functions are somewhat circular and 
+        // The problem seems to be that the SetConsoleXXX functions are somewhat circular and
         // fail depending on the state of the current console properties, i.e. you can't set
         // the buffer size until you set the screen size, but you can't change the screen size
         // until the buffer size is correct. This coupled with a precise ordering of calls
@@ -115,7 +115,7 @@ public:
         // Assign screen buffer to the console
         if (!SetConsoleActiveScreenBuffer(m_hConsole))
             return Error(L"SetConsoleActiveScreenBuffer");
-        
+
         // Set the font size now that the screen buffer has been assigned to the console
         CONSOLE_FONT_INFOEX cfi;
         cfi.cbSize = sizeof(cfi);
@@ -145,7 +145,7 @@ public:
         if (!SetConsoleWindowInfo(m_hConsole, TRUE, &m_rectWindow))
             return Error(L"SetConsoleWindowInfo");
 
-        // Set flags to allow mouse input       
+        // Set flags to allow mouse input
         if (!SetConsoleMode(m_hConsoleIn, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT))
             return Error(L"SetConsoleMode");
 
@@ -218,7 +218,7 @@ public:
                 { x = x2; y = y2; xe = x1;}
 
             Draw(x, y, c, col);
-            
+
             for (i = 0; x<xe; i++)
             {
                 x = x + 1;
@@ -268,7 +268,7 @@ public:
     {
         auto SWAP = [](int &x, int &y) { int t = x; x = y; y = t; };
         auto drawline = [&](int sx, int ex, int ny) { for (int i = sx; i <= ex; i++) Draw(i, ny, c, col); };
-        
+
         int t1x, t2x, y, minx, maxx, t1xp, t2xp;
         bool changed1 = false;
         bool changed2 = false;
@@ -391,7 +391,7 @@ public:
 
             if (minx>t1x) minx = t1x; if (minx>t2x) minx = t2x;
             if (maxx<t1x) maxx = t1x; if (maxx<t2x) maxx = t2x;
-            drawline(minx, maxx, y);                                        
+            drawline(minx, maxx, y);
             if (!changed1) t1x += signx1;
             t1x += t1xp;
             if (!changed2) t2x += signx2;
@@ -513,7 +513,7 @@ public:
         return m_nScreenWidth;
     }
 
-    int ScreenHeight() 
+    int ScreenHeight()
     {
         return m_nScreenHeight;
     }
@@ -643,7 +643,7 @@ private:
 
                 // Update Title & Present Screen Buffer
                 wchar_t s[256];
-                swprintf_s(s, 256, L"OneLoneCoder.com - Console Game Engine - %s - FPS: %3.2f - %d ", m_sAppName.c_str(), 1.0f / fElapsedTime, events);
+                swprintf_s(s, 256, L"Console Game Engine - %s - FPS: %3.2f - %d ", m_sAppName.c_str(), 1.0f / fElapsedTime, events);
                 SetConsoleTitle(s);
                 WriteConsoleOutput(m_hConsole, m_bufScreen, { (short)m_nScreenWidth, (short)m_nScreenHeight }, { 0,0 }, &m_rectWindow);
             }
@@ -667,9 +667,9 @@ private:
 public:
     // User MUST OVERRIDE THESE!!
     virtual bool OnUserCreate() = 0;
-    virtual bool OnUserUpdate(float fElapsedTime) = 0;  
+    virtual bool OnUserUpdate(float fElapsedTime) = 0;
 
-    // Optional for clean up 
+    // Optional for clean up
     virtual bool OnUserDestroy()
     {
         return true;
@@ -677,7 +677,7 @@ public:
 
 
 protected:
-    
+
 
     struct sKeyState
     {
